@@ -17,7 +17,7 @@ import com.badlogic.gdx.utils.Array;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.TimeUtils;
 
-public class GameScreen implements Screen, ApplicationListener {
+public class GameScreen implements Screen {
     final Drop game;
 
     Texture dropImage;
@@ -32,6 +32,31 @@ public class GameScreen implements Screen, ApplicationListener {
 
     public GameScreen(final Drop game) {
         this.game = game;
+
+        // load the images for the droplet and the bucket, 64x64 pixels each
+        dropImage = new Texture(Gdx.files.internal("droplet.png"));
+        bucketImage = new Texture(Gdx.files.internal("bucket.png"));
+
+        // load the drop sound effect and the rain background "music"
+        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
+        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
+        rainMusic.setLooping(true);
+
+        // create the camera and the SpriteBatch
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, 800, 480);
+
+        // create a Rectangle to logically represent the bucket
+        bucket = new Rectangle();
+        bucket.x = 800 / 2 - 64 / 2; // center the bucket horizontally
+        bucket.y = 20; // bottom left corner of the bucket is 20 pixels above
+        // the bottom screen edge
+        bucket.width = 64;
+        bucket.height = 64;
+
+        // create the raindrops array and spawn the first raindrop
+        raindrops = new Array<Rectangle>();
+        spawnRaindrop();
     }
 
 
@@ -111,40 +136,7 @@ public class GameScreen implements Screen, ApplicationListener {
     }
 
     @Override
-    public void create() {
-        // load the images for the droplet and the bucket, 64x64 pixels each
-        dropImage = new Texture(Gdx.files.internal("droplet.png"));
-        bucketImage = new Texture(Gdx.files.internal("bucket.png"));
-
-        // load the drop sound effect and the rain background "music"
-        dropSound = Gdx.audio.newSound(Gdx.files.internal("drop.wav"));
-        rainMusic = Gdx.audio.newMusic(Gdx.files.internal("rain.mp3"));
-        rainMusic.setLooping(true);
-
-        // create the camera and the SpriteBatch
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 800, 480);
-
-        // create a Rectangle to logically represent the bucket
-        bucket = new Rectangle();
-        bucket.x = 800 / 2 - 64 / 2; // center the bucket horizontally
-        bucket.y = 20; // bottom left corner of the bucket is 20 pixels above
-        // the bottom screen edge
-        bucket.width = 64;
-        bucket.height = 64;
-
-        // create the raindrops array and spawn the first raindrop
-        raindrops = new Array<Rectangle>();
-        spawnRaindrop();
-    }
-
-    @Override
     public void resize(int width, int height) {
-    }
-
-    @Override
-    public void render() {
-
     }
 
     @Override
