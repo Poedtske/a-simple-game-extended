@@ -3,7 +3,8 @@ package com.mygdx.game;
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
-import com.mygdx.game.MyGdxGame;
+//import com.mygdx.game.MyGdxGame;
+import com.mygdx.game.GameScreen;
 
 // Please note that on macOS your application needs to be started with the -XstartOnFirstThread JVM argument
 public class DesktopLauncher {
@@ -15,7 +16,7 @@ public class DesktopLauncher {
 		config.useVsync(true);
 		config.setForegroundFPS(60);
 		Drop game = new Drop();
-		new Lwjgl3Application( new MyGdxGame(game), config);
+		new Lwjgl3Application( new GameScreen(game), config);
 
 
 	}
